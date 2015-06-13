@@ -1,0 +1,16 @@
+PKGNAME=$1
+OUTPUT=/tmp/awesomepkg
+AUTHOR="Awesome Person <root@localhost>"
+
+mkdir awesomepkg
+make install/fast DESTDIR=$OUTPUT
+
+mkdir $OUTPUT/DEBIAN
+echo "Package: $PKGNAME
+Version: 999:999
+Architecture: all
+Maintainer: $AUTHOR
+Description: fake override package for kubuntu ci install checks" > $OUTPUT/DEBIAN/control
+
+dpkg-deb -b $OUTPUT $PKGNAME.deb
+
