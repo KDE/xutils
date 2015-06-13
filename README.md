@@ -1,7 +1,7 @@
 This repository has a set of tools that will be available from the cross compilation system (see xbuilder for more information).
 
-= Tools =
-== createpkg ==
+# Tools
+## createpkg
 Can be used to easily create a deb file that can be distributed. Note this is not a packaging method approved by any Ubuntu or Debian leaders.
 
 Example:
