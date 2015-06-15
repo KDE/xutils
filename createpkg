@@ -1,13 +1,13 @@
 #!/bin/bash
 
 PKGNAME=$1
-OUTPUT=/tmp/awesomepkg
+OUTPUT=/tmp/awesomepkg/$PKGNAME
 AUTHOR="Awesome Person <root@localhost>"
 
-mkdir awesomepkg
+rm -rf $OUTPUT
+mkdir -p $OUTPUT/DEBIAN
 make install/fast DESTDIR=$OUTPUT
 
-mkdir $OUTPUT/DEBIAN
 echo "Package: $PKGNAME
 Version: 999:999
 Architecture: all
