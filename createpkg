@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ $# -eq 0 ]; then
+    echo "Please specify package name"
+    exit 1
+fi
+
 PKGNAME=$1
 OUTPUT=/tmp/awesomepkg/$PKGNAME
 AUTHOR="Awesome Person <root@localhost>"
