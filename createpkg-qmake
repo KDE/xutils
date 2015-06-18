@@ -1,17 +1,22 @@
 #!/bin/bash
 
+if [ $# -eq 0 ]; then
+    echo "Please specify package name"
+    exit 1
+fi
+
 PKGNAME=$1
 OUTPUT=/tmp/awesomepkg
 AUTHOR="Awesome Person <root@localhost>"
 
+rm -rf $OUTPUT
+mkdir -p $OUTPUT/DEBIAN
 make install INSTALL_ROOT=$OUTPUT
 
-mkdir -p $OUTPUT/DEBIAN
 echo "Package: $PKGNAME
 Version: 999:999
-Architecture: all
+Architecture: $DEB_HOST_ARCH
 Maintainer: $AUTHOR
-Description: fake override package for kubuntu ci install checks" > $OUTPUT/DEBIAN/control
+Description: fake package developed by a lazy developer." > $OUTPUT/DEBIAN/control
 
 dpkg-deb -b $OUTPUT $PKGNAME.deb
-
