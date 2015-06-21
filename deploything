@@ -1,0 +1,20 @@
+#! /bin/bash
+set -e
+
+if [ $# -lt 3 ]; then
+    echo "$0 <pkgname.deb> <executable> <password>"
+    exit 1
+
+fi
+pkgname=$1
+appexec=$2
+password=$3
+
+adb push $pkgname /tmp
+adb shell "sudo -S dpkg -i /tmp/$pkgname <<< '$password'"
+
+# adb shell "adb shell 'sudo dpkg -i /tmp/$pkgname'"
+
+adb shell "pkill $appexec"
+adb shell "$appexec"
+
