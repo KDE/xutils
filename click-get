@@ -1,0 +1,50 @@
+#!/usr/bin/python
+
+from oauthlib.oauth1.rfc5849 import Client
+import requests
+import json
+import os.path
+import sys
+import getpass
+
+if len(sys.argv)!=2:
+    print "Usage: click-get <url>"
+    sys.exit(1)
+
+clickFileUrl = sys.argv[-1]
+clickFileName = clickFileUrl[clickFileUrl.rfind('/')+1:]
+data = []
+
+configfile="/tmp/ubuntucredentials.json"
+if not os.path.exists(configfile):
+    #curl https://login.ubuntu.com/api/v2/tokens/oauth -d '{"email": "aleixpol@kde.org", "password": "<password>", "token_name": "click_example"}' -H 'Content-Type: application/json'
+
+    email = raw_input("email: ")
+    password = getpass.getpass()
+
+    headers = { "content-type": "application/json" }
+    payload = { 'email': email, 'password': password, 'token_name': 'click-get'}
+    response = requests.post("https://login.ubuntu.com/api/v2/tokens/oauth", headers=headers, json=payload)
+    if response.status_code != requests.codes.ok:
+        print("Error! %d: %s" % (response.status_code, response.text))
+        sys.exit(0)
+
+    with open(configfile, "wb") as f:
+        f.write(response.content)
+
+with open(configfile) as data_file:
+    data = json.load(data_file)
+
+client = Client(
+    data['consumer_key'],
+    data['consumer_secret'],
+    data['token_key'],
+    data['token_secret']
+)
+
+uri, headers, body = client.sign(sys.argv[-1])
+
+response = requests.get(clickFileUrl, headers=headers)
+
+with open(clickFileName, "wb") as f:
+     f.write(response.content)
