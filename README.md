@@ -24,5 +24,16 @@ TODOCUMENT (and rename)
 ## cloneprocess
 Lets you run a process, using the environment variables of another process.
 
+```
 cloneprocess <pid> [command args...]
+```
+
+## click-get
+Downloads a file using ubuntu's oauth information.
+
+```
+click-get <url>
+```
+
+It will ask for an email and password, which are the login information in login.ubuntu.com.
 
