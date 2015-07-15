@@ -18,8 +18,8 @@ Disclaimer: Example not tested.
 
 This will create a package that doesn't specify dependencies and with a really high version. Keep that in mind.
 
-## deploything
-TODOCUMENT (and rename)
+## deploypkg
+TODOCUMENT
 
 ## cloneprocess
 Lets you run a process, using the environment variables of another process.
